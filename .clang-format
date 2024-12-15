@@ -1,0 +1,48 @@
+BasedOnStyle: Google
+ColumnLimit: 80
+ContinuationIndentWidth: 4
+IndentWidth: 4
+TabWidth: 4
+ConstructorInitializerIndentWidth: 4
+BracedInitializerIndentWidth: 4
+AlignArrayOfStructures: None
+IndentCaseLabels: true
+# PenaltyReturnTypeOnItsOwnLine: 200
+UseTab: Never
+SortIncludes: true
+SortUsingDeclarations: false
+AlignConsecutiveMacros: false
+AlignEscapedNewlines: DontAlign
+AlignAfterOpenBracket: BlockIndent
+AlignOperands: AlignAfterOperator
+AlignTrailingComments: true
+PointerAlignment: Left
+# BinPackArguments: false
+# BinPackParameters: false
+SpacesInContainerLiterals: false
+Cpp11BracedListStyle: false
+AllowShortFunctionsOnASingleLine: Empty
+AllowShortIfStatementsOnASingleLine: Always
+AllowShortBlocksOnASingleLine: Empty
+FixNamespaceComments: false
+ReflowComments: true
+NamespaceIndentation: All
+IncludeBlocks: Merge
+BreakStringLiterals: false
+BreakConstructorInitializers: AfterColon
+IndentPPDirectives: BeforeHash
+IncludeCategories:
+  - Regex: '"[[:alnum:]._-]+"'
+    Priority: 1
+    SortPriority: 1
+  - Regex: '^((<|").*/)'
+    Priority: 2
+    SortPriority: 2
+  - Regex: "<[[:alnum:]._-]+>"
+    Priority: 3
+    SortPriority: 3
+BreakTemplateDeclarations: Yes
+AlwaysBreakTemplateDeclarations: Yes
+BreakBeforeConceptDeclarations: Always
+AccessModifierOffset: -4
+SkipMacroDefinitionBody: true
