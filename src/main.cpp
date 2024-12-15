@@ -1,16 +1,22 @@
 #include "Timer.h"
 #include "arguments.h"
+#include "core.h"
 #include "fib.h"
 #include "sciNumber.h"
 
 void run(const int argc, const char* argv[]) {
     const Arguments arguments = ArgumentParser::handleArguments(argc, argv);
 
+    std::cout << "Calculating Fibonacci(" << arguments.index << ") on "
+              << BUILD_TYPE << " build using algorithm "
+              << ArgumentParser::getAlgorithmName(arguments.algorithm) << "..."
+              << std::endl;
+
     Timer timer;
     timer.start();
 
     const auto algorithm = ArgumentParser::getAlgorithm(arguments.algorithm);
-    const auto result = fibonacci(arguments.index);
+    const auto result = algorithm(arguments.index);
 
     timer.stop();
 
@@ -26,9 +32,6 @@ int main(const int argc, const char* argv[]) {
     } catch (const ArgumentError& e) {
         std::cerr << "Invalid Argument Error: " << e.what() << std::endl;
         ArgumentParser::printUsage();
-        return EXIT_FAILURE;
-    } catch (const std::exception& e) {
-        std::cerr << "Error: " << e.what() << std::endl;
         return EXIT_FAILURE;
     }
     return EXIT_SUCCESS;

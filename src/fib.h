@@ -1,8 +1,6 @@
 #pragma once
 
-#include <cstdint>
-#include <functional>
-#include <vector>
+#include "core.h"
 
 #ifdef _DEBUG
 typedef uint64_t digit_t;

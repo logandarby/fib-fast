@@ -1,8 +1,6 @@
 #pragma once
 
-#include <cmath>
-#include <iostream>
-#include <vector>
+#include "core.h"
 
 struct SciNumber {
     size_t base;
@@ -13,18 +11,26 @@ struct SciNumber {
 
     void normalize();
 
+    static const SciNumber ZERO;
+
     template <typename T>
     static SciNumber fromDigitVector(const std::vector<T> &digits) {
         // Search for first non-zero digit
         const size_t TYPE_BITS = sizeof(T) * CHAR_BIT;
         T nonZeroDigit = 0;
         size_t nonZeroDigitIndex = 0;
-        for (size_t i = digits.size() - 1; i >= 0; i--) {
+        if (digits.empty()) {
+            return SciNumber::ZERO;
+        }
+        for (size_t i = digits.size() - 1; i-- > 0;) {
             if (digits.at(i) != 0) {
                 nonZeroDigit = digits.at(i);
                 nonZeroDigitIndex = i;
                 break;
             }
+        };
+        if (nonZeroDigit == 0) {
+            return SciNumber::ZERO;
         }
         long double a = nonZeroDigit;
         if (nonZeroDigitIndex > 0) {

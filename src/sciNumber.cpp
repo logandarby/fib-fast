@@ -6,6 +6,8 @@ namespace Util {
     }
 }
 
+const SciNumber SciNumber::ZERO{ .base = 10, .exponent = 0, .coefficient = 0 };
+
 void SciNumber::convertBase(const unsigned int newBase) {
     if (newBase == base) {
         return;
@@ -26,6 +28,10 @@ void SciNumber::normalize() {
 }
 
 std::ostream &operator<<(std::ostream &os, const SciNumber &sciNumber) {
+    if (sciNumber.coefficient == 0) {
+        os << "0";
+        return os;
+    }
     os << sciNumber.coefficient << " * " << sciNumber.base << "^"
        << sciNumber.exponent;
     return os;

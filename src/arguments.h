@@ -1,11 +1,7 @@
 #pragma once
 
+#include "core.h"
 #include "fib.h"
-#include <functional>
-#include <iostream>
-#include <stdexcept>
-#include <string>
-#include <unordered_map>
 
 /**
  * @brief A list of all possible algorithms, which must be matched in
@@ -31,8 +27,8 @@ public:
 };
 
 static const Arguments DEFAULT_ARGUMENTS{
-    .index = 400'000,
-    .algorithm = AlgorithmType::MATRIX,
+    .index = 100'000,
+    .algorithm = AlgorithmType::LINEAR,
 };
 
 static const auto ALGORITHM_MAP =
@@ -46,7 +42,5 @@ public:
     static Arguments handleArguments(const int argc, const char* argv[]);
     static FibonacciFunction getAlgorithm(const AlgorithmType type);
     static void printUsage();
-
-private:
     static std::string getAlgorithmName(const AlgorithmType type);
 };

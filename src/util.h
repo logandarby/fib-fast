@@ -18,8 +18,12 @@ namespace Util {
      */
     template <DigitType D>
     inline size_t getMaxDigits(const size_t index) {
-        static const size_t DIGIT_BITS = sizeof(D) * CHAR_BIT;
-        return (index - 1) / DIGIT_BITS + 1;
+        if (index == 0) {
+            return 1;
+        }
+        const size_t DIGIT_BITS = sizeof(D) * CHAR_BIT;
+        const size_t sizeToAllocate = (index + DIGIT_BITS - 1) / DIGIT_BITS + 1;
+        return std::max(sizeToAllocate, static_cast<size_t>(1));
     }
 
     /**
@@ -43,14 +47,18 @@ namespace Util {
     /**
      * @brief Computes a += b
      */
-    template <DigitType T>
-    unsigned char accumulate(T *a, const T *b, const size_t size) {
+    template <typename T>
+    unsigned char accumulate(
+        std::vector<T> &a, const std::vector<T> &b, const size_t size
+    ) {
         unsigned char carry = 0;
         for (size_t i = 0; i < size; i++) {
-            carry = addOverflow(a[i], carry, &a[i]);
-            carry += static_cast<unsigned char>(addOverflow(a[i], b[i], &a[i]));
+            carry = addOverflow(a.at(i), carry, &a.at(i));
+            carry += static_cast<unsigned char>(
+                addOverflow(a.at(i), b.at(i), &a.at(i))
+            );
         }
-        return a[size] = carry;
+        return a.at(size) = carry;
     }
 
     /**

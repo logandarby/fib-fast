@@ -1,8 +1,5 @@
 #include "fib.h"
 #include "util.h"
-#include <cmath>
-#include <iostream>
-#include <memory>
 
 // struct mat2 {
 //     factor_t *a, b, c, d;
@@ -23,6 +20,7 @@ void printOut(const factor_t *const out, size_t size) {
 }
 
 std::vector<digit_t> fibonacciMatrix(size_t index) {
+    std::cout << "fibonacciMatrix(" << index << ")" << std::endl;
     factor_t a[2] = { 0, 255 };
     factor_t b[2] = { 0, 255 };
     factor_t out[4] = { 0, 0, 0, 0 };
