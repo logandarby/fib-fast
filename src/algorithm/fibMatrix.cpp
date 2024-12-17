@@ -20,14 +20,7 @@ void printOut(const factor_t *const out, size_t size) {
 }
 
 std::vector<digit_t> fibonacciMatrix(size_t index) {
-    std::cout << "fibonacciMatrix(" << index << ")" << std::endl;
-    factor_t a[2] = { 0, 255 };
-    factor_t b[2] = { 0, 255 };
-    factor_t out[4] = { 0, 0, 0, 0 };
-    Util::multiplyAccumulate<factor_t, product_t>(out, a, b, 2);
-    printOut(out, 4);
-
-    /*
+        /*
     M2x2 step = (0, 1, 1, 1);
     M2x2 fib(step)
     while (index > 0) {

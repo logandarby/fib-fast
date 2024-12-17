@@ -47,8 +47,16 @@ namespace Util {
      */
     template <typename T, typename R, typename S>
         requires std::is_convertible_v<T, S> && std::is_convertible_v<R, S>
-    inline bool addOverflow(T a, R b, S *result) {
+    [[nodiscard]] inline bool addOverflow(T a, R b, S *result) {
         return __builtin_add_overflow(a, b, result);
+    }
+    /**
+     * @brief Computes A += B with carry
+     */
+    template <typename T, typename R>
+        requires std::is_convertible_v<R, T>
+    [[nodiscard]] inline bool addOverflow(T &a, R b) {
+        return __builtin_add_overflow(a, b, &a);
     }
 
     /**
@@ -80,9 +88,14 @@ namespace Util {
     ) {
         for (size_t i = 0; i < size; i++) {
             Product product = a[i] * scalar;
-            out[i + shiftFactor] += product;
+            const bool carry =
+                addOverflow(out[i + shiftFactor], static_cast<Factor>(product));
             const Factor shifted = product >> (sizeof(Factor) * CHAR_BIT);
-            out[i + shiftFactor + 1] += shifted;
+            const bool carry2 =
+                addOverflow(out[i + shiftFactor + 1], shifted + carry);
+            if (i < size - 1) {
+                out[i + shiftFactor + 2] += carry2;
+            }
         }
     }
 
