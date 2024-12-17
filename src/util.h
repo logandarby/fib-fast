@@ -1,5 +1,6 @@
 #pragma once
 
+#include "core.h"
 #include "fib.h"
 #include <climits>
 
@@ -11,6 +12,12 @@ namespace Util {
     template <typename Factor, typename Product>
     concept ValidFactorProduct = DigitType<Factor> && DigitType<Product> &&
                                  sizeof(Factor) * 2 <= sizeof(Product);
+
+    template <typename T, typename D = decltype(T()[0])>
+    concept IndexableToDigit = requires(T t, D d) {
+        requires DigitType<std::remove_reference_t<D>>;
+        { t.at(0) } -> std::convertible_to<D>;
+    };
 
     /**
      * @brief Get the maximum number of digits that can be stored in the
@@ -27,11 +34,11 @@ namespace Util {
     }
 
     /**
-     * @brief These built-in functions promote the first two operands into
-     * infinite precision signed type and perform addition on those promoted
-     * operands. The result is then cast to the type the third pointer argument
-     * points to and stored there. If the result has carried, the function
-     * returns true
+     * @brief From GCC: These built-in functions promote the first two operands
+     * into infinite precision signed type and perform addition on those
+     * promoted operands. The result is then cast to the type the third pointer
+     * argument points to and stored there. If the result has carried, the
+     * function returns true
      *
      * As the addition is performed in infinite signed precision, these built-in
      * functions have fully defined behavior for all argument values.
@@ -47,10 +54,9 @@ namespace Util {
     /**
      * @brief Computes a += b
      */
-    template <typename T>
-    unsigned char accumulate(
-        std::vector<T> &a, const std::vector<T> &b, const size_t size
-    ) {
+    template <typename T, typename D = decltype(T()[0])>
+        requires IndexableToDigit<T, D>
+    unsigned char accumulate(T &a, const T &b, const size_t size) {
         unsigned char carry = 0;
         for (size_t i = 0; i < size; i++) {
             carry = addOverflow(a.at(i), carry, &a.at(i));
@@ -97,6 +103,28 @@ namespace Util {
         for (size_t i = 0; i < size; i++) {
             scalarMultAccumulate<Factor, Product>(out, a, b[i], size, i);
         }
+    }
+
+    /**
+     * @brief Shift a to the left by shift bits
+     *
+     * @returns The carry from the shift, if it's occured
+     */
+    template <typename T>
+        requires IndexableToDigit<T>
+    auto bitShiftLeft(T &out, const size_t size, const size_t shift) {
+        ASSERT(!(shift == 0 || size == 0))
+        const size_t bitSize = sizeof(out.at(0)) * CHAR_BIT;
+        const size_t shiftRemainder = bitSize - shift;
+        const auto carry = out.at(size - 1) >> shiftRemainder;
+        for (size_t i = size - 1; i >= 1; i--) {
+            const auto test = 2;
+            const auto currentShift = (out.at(i) << shift);
+            const auto remainderShift = (out.at(i - 1) >> shiftRemainder);
+            out.at(i) = currentShift | remainderShift;
+        }
+        out.at(0) <<= shift;
+        return carry;
     }
 
 }

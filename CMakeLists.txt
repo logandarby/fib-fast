@@ -5,6 +5,10 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 
 project(FibFast)
 
+# Libraries
+
+add_subdirectory(extern/spdlog)
+
 # Sources
 # MY_SOURCES is defined to be a list of all the source files in src that aren't main.cpp
 file(GLOB_RECURSE MY_SOURCES CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp")
@@ -25,7 +29,7 @@ add_subdirectory(tests)
 
 # Final Link
 add_library("${CMAKE_PROJECT_NAME}_Lib" STATIC ${MY_SOURCES})
-# target_sources("${CMAKE_PROJECT_NAME}" PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/src/main.cpp" "${MY_SOURCES}")
+target_link_libraries("${CMAKE_PROJECT_NAME}_Lib" PUBLIC spdlog)
 target_sources("${CMAKE_PROJECT_NAME}" PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/src/main.cpp")
-target_link_libraries("${CMAKE_PROJECT_NAME}" PRIVATE "${CMAKE_PROJECT_NAME}_Lib")
+target_link_libraries("${CMAKE_PROJECT_NAME}" PUBLIC "${CMAKE_PROJECT_NAME}_Lib")
 target_include_directories("${CMAKE_PROJECT_NAME}_Lib" PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/src")

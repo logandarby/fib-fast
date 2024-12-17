@@ -1,12 +1,7 @@
 #pragma once
 
-// Macro Definitions
-
-#ifdef _DEBUG
-    #define BUILD_TYPE "Debug"
-#else
-    #define BUILD_TYPE "Release"
-#endif
+#include "assert.h"
+#include "base.h"
 
 // Common Includes
 
