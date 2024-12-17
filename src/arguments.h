@@ -9,7 +9,8 @@
  */
 #define ALGORITHM_TABLE \
     X(LINEAR)           \
-    X(MATRIX)
+    X(MATRIX)           \
+    X(FAST_DOUBLE)
 
 #define X(a) a,
 enum class AlgorithmType { ALGORITHM_TABLE };
@@ -27,14 +28,15 @@ public:
 };
 
 static const Arguments DEFAULT_ARGUMENTS{
-    .index = 100'000,
-    .algorithm = AlgorithmType::LINEAR,
+    .index = 20,
+    .algorithm = AlgorithmType::FAST_DOUBLE,
 };
 
 static const auto ALGORITHM_MAP =
     std::unordered_map<AlgorithmType, FibonacciFunction>{
         { AlgorithmType::LINEAR, fibonacci },
-        { AlgorithmType::MATRIX, fibonacciMatrix }
+        { AlgorithmType::MATRIX, fibonacciMatrix },
+        { AlgorithmType::FAST_DOUBLE, fibonacciDouble },
     };
 
 class ArgumentParser {

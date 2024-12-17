@@ -1,7 +1,6 @@
 #pragma once
 
 #include "core.h"
-#include "fib.h"
 #include <climits>
 
 namespace Util {
@@ -10,13 +9,15 @@ namespace Util {
         std::unsigned_integral<T> || std::is_same_v<T, __uint128_t>;
 
     template <typename Factor, typename Product>
-    concept ValidFactorProduct = DigitType<Factor> && DigitType<Product> &&
-                                 sizeof(Factor) * 2 <= sizeof(Product);
+    concept ValidFactorProductPair = DigitType<Factor> && DigitType<Product> &&
+                                     sizeof(Factor) * 2 <= sizeof(Product);
 
     template <typename T, typename D = decltype(T()[0])>
     concept IndexableToDigit = requires(T t, D d) {
         requires DigitType<std::remove_reference_t<D>>;
         { t.at(0) } -> std::convertible_to<D>;
+        { t[0] } -> std::convertible_to<D>;
+        { t.size() } -> std::same_as<size_t>;
     };
 
     /**
@@ -61,9 +62,10 @@ namespace Util {
 
     /**
      * @brief Computes a += b
+     *
+     * Requires that accumulate has enough for a carry bit
      */
-    template <typename T, typename D = decltype(T()[0])>
-        requires IndexableToDigit<T, D>
+    template <IndexableToDigit T>
     unsigned char accumulate(T &a, const T &b, const size_t size) {
         unsigned char carry = 0;
         for (size_t i = 0; i < size; i++) {
@@ -72,7 +74,33 @@ namespace Util {
                 addOverflow(a.at(i), b.at(i), &a.at(i))
             );
         }
+        ASSERT(
+            a.size() > size,
+            "Argument \"a\" must have enough space for a carry bit"
+        );
         return a.at(size) = carry;
+    }
+
+    /**
+     * @brief Computes a -= b
+     */
+    template <
+        typename T, DigitType D = std::remove_reference_t<decltype(T()[0])>>
+        requires IndexableToDigit<T, D>
+    bool subtractAccumulate(T &a, const T &b, const size_t size) {
+        unsigned char underflow = 0;
+        for (size_t i = 0; i < size; i++) {
+            underflow = addOverflow(a.at(i), underflow, &a.at(i));
+            D twosComplement = ~b.at(i);
+            if (i == 0) {
+                underflow +=
+                    static_cast<unsigned char>(addOverflow(twosComplement, 1));
+            }
+            underflow += static_cast<unsigned char>(
+                addOverflow(a.at(i), twosComplement, &a.at(i))
+            );
+        }
+        return !underflow;
     }
 
     /**
@@ -80,41 +108,43 @@ namespace Util {
      *
      * Requires out has size * 2 items, and a has size items
      */
-    template <typename Factor, typename Product>
-        requires ValidFactorProduct<Factor, Product>
+    template <
+        typename Factor, typename Product, IndexableToDigit<Factor> I,
+        IndexableToDigit<Factor> J>
+        requires ValidFactorProductPair<Factor, Product>
     void scalarMultAccumulate(
-        Factor *out, const Factor *a, const Factor scalar, const size_t size,
+        I &out, const J &a, const Factor &scalar, const size_t size,
         const size_t shiftFactor
     ) {
         for (size_t i = 0; i < size; i++) {
-            Product product = a[i] * scalar;
-            const bool carry =
-                addOverflow(out[i + shiftFactor], static_cast<Factor>(product));
+            Product product = a.at(i) * scalar;
+            const bool carry = addOverflow(
+                out.at(i + shiftFactor), static_cast<Factor>(product)
+            );
             const Factor shifted = product >> (sizeof(Factor) * CHAR_BIT);
             const bool carry2 =
-                addOverflow(out[i + shiftFactor + 1], shifted + carry);
+                addOverflow(out.at(i + shiftFactor + 1), shifted + carry);
             if (i < size - 1) {
-                out[i + shiftFactor + 2] += carry2;
+                out.at(i + shiftFactor + 2) += carry2;
             }
         }
     }
 
     /**
-     * @brief Multiply a by b and store the result in out
+     * @brief Multiply a by b and add the result in out
      *
      * Size refers to the size of a and b
      * Requires out has size * 2 elements
      */
-    template <typename Factor, typename Product>
-        requires ValidFactorProduct<Factor, Product>
-    void multiplyAccumulate(
-        Factor out[], const Factor a[], const Factor b[], const size_t size
-    ) {
-        for (size_t i = 0; i < size; i++) {
-            out[i] = 0;
-        }
-        for (size_t i = 0; i < size; i++) {
-            scalarMultAccumulate<Factor, Product>(out, a, b[i], size, i);
+    template <
+        typename Factor, typename Product, IndexableToDigit<Factor> I,
+        IndexableToDigit<Factor> J>
+        requires ValidFactorProductPair<Factor, Product>
+    void multiplyAccumulate(I &out, const J &a, const J &b, const size_t size) {
+        ASSERT(&out != &a && &out != &b);
+        const size_t halfSize = size / 2;
+        for (size_t i = 0; i < halfSize; i++) {
+            scalarMultAccumulate<Factor, Product>(out, a, b.at(i), halfSize, i);
         }
     }
 
@@ -123,8 +153,7 @@ namespace Util {
      *
      * @returns The carry from the shift, if it's occured
      */
-    template <typename T>
-        requires IndexableToDigit<T>
+    template <IndexableToDigit T>
     auto bitShiftLeft(T &out, const size_t size, const size_t shift) {
         ASSERT(!(shift == 0 || size == 0))
         const size_t bitSize = sizeof(out.at(0)) * CHAR_BIT;
@@ -138,6 +167,19 @@ namespace Util {
         }
         out.at(0) <<= shift;
         return carry;
+    }
+
+    template <IndexableToDigit T>
+    void bitShiftRight(T &out, const size_t size, const size_t shift) {
+        ASSERT(!(shift == 0 || size == 0))
+        const size_t bitSize = sizeof(out.at(0)) * CHAR_BIT;
+        const size_t shiftRemainder = bitSize - shift;
+        for (size_t i = 0; i < size - 1; i++) {
+            const auto currentShift = (out.at(i) >> shift);
+            const auto remainderShift = (out.at(i + 1) << shiftRemainder);
+            out.at(i) = currentShift | remainderShift;
+        }
+        out.at(size - 1) >>= shift;
     }
 
 }

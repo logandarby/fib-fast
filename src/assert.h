@@ -1,6 +1,7 @@
 #pragma once
 
 #include "base.h"
+#include "logger.h"
 #include <filesystem>
 
 #ifdef ENABLE_ASSERTS

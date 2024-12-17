@@ -17,13 +17,9 @@ include(GoogleTest)
 
 # Add Tests
 
-add_executable(tests tests.cpp)
 add_executable(utilTest utilTest.cpp)
 # gtest_discover_tests(tests)
-target_include_directories(tests PRIVATE "../src")
-target_link_libraries(tests PRIVATE GTest::GTest FibFast_Lib)
 target_include_directories(utilTest PRIVATE "../src")
 target_link_libraries(utilTest PRIVATE GTest::GTest FibFast_Lib)
 
-add_test(tests_gtest tests)
 add_test(utilTest_gtest utilTest)

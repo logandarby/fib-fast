@@ -20,8 +20,7 @@ void printOut(const factor_t *const out, size_t size) {
 }
 
 std::vector<digit_t> fibonacciMatrix(size_t index) {
-        /*
-    M2x2 step = (0, 1, 1, 1);
+    /* M2x2 step = (0, 1, 1, 1); // A B C D
     M2x2 fib(step)
     while (index > 0) {
         if (index & 1) != 0) {

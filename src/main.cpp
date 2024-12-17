@@ -7,10 +7,6 @@
 #include "util.h"
 
 void run(const int argc, const char* argv[]) {
-    std::vector<uint8_t> array{ 0b11111111, 0b10000001 };
-    const auto carry = Util::bitShiftLeft(array, 2, 1);
-    return;
-
     const Arguments arguments = ArgumentParser::handleArguments(argc, argv);
 
     std::cout << "Calculating Fibonacci(" << arguments.index << ") on "
