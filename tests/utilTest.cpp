@@ -52,49 +52,49 @@ TEST(BitShiftRight, shiftOne) {
     ASSERT_EQ(array.at(0), 0b01111111);
 }
 
-TEST(Multiply, multoverflow) {
-    std::array<uint8_t, 2> a{ 255, 0 };
-    std::array<uint8_t, 2> b{ 255, 0 };
-    std::array<uint8_t, 4> out{ 0, 0, 0, 0 };
-    Util::multiplyAccumulate<uint8_t, uint16_t>(out, a, b, 4);
-    ASSERT_EQ(out[0], 0b00000001);
-    ASSERT_EQ(out[1], 0b11111110);
-    ASSERT_EQ(out[2], 0);
-    ASSERT_EQ(out[3], 0);
-}
+// TEST(Multiply, multoverflow) {
+//     std::array<uint8_t, 2> a{ 255, 0 };
+//     std::array<uint8_t, 2> b{ 255, 0 };
+//     std::array<uint8_t, 4> out{ 0, 0, 0, 0 };
+//     Util::multiplyAccumulate<uint8_t, uint16_t>(out, a, b, 4);
+//     ASSERT_EQ(out[0], 0b00000001);
+//     ASSERT_EQ(out[1], 0b11111110);
+//     ASSERT_EQ(out[2], 0);
+//     ASSERT_EQ(out[3], 0);
+// }
 
-TEST(Multiply, multhigh) {
-    std::array<uint8_t, 2> a{ 1, 1 };
-    std::array<uint8_t, 2> b{ 1, 1 };
-    std::array<uint8_t, 4> out{ 0, 0, 0, 0 };
-    Util::multiplyAccumulate<uint8_t, uint16_t>(out, a, b, 4);
-    ASSERT_EQ(out[0], 1);
-    ASSERT_EQ(out[1], 0b10);
-    ASSERT_EQ(out[2], 1);
-    ASSERT_EQ(out[3], 0);
-}
+// TEST(Multiply, multhigh) {
+//     std::array<uint8_t, 2> a{ 1, 1 };
+//     std::array<uint8_t, 2> b{ 1, 1 };
+//     std::array<uint8_t, 4> out{ 0, 0, 0, 0 };
+//     Util::multiplyAccumulate<uint8_t, uint16_t>(out, a, b, 4);
+//     ASSERT_EQ(out[0], 1);
+//     ASSERT_EQ(out[1], 0b10);
+//     ASSERT_EQ(out[2], 1);
+//     ASSERT_EQ(out[3], 0);
+// }
 
-TEST(Multiply, zero) {
-    std::array<uint8_t, 2> a{ 0, 0 };
-    std::array<uint8_t, 2> b{ 0, 0 };
-    std::array<uint8_t, 4> out{ 0, 0, 0, 0 };
-    Util::multiplyAccumulate<uint8_t, uint16_t>(out, a, b, 4);
-    ASSERT_EQ(out[0], 0);
-    ASSERT_EQ(out[1], 0);
-    ASSERT_EQ(out[2], 0);
-    ASSERT_EQ(out[3], 0);
-}
+// TEST(Multiply, zero) {
+//     std::array<uint8_t, 2> a{ 0, 0 };
+//     std::array<uint8_t, 2> b{ 0, 0 };
+//     std::array<uint8_t, 4> out{ 0, 0, 0, 0 };
+//     Util::multiplyAccumulate<uint8_t, uint16_t>(out, a, b, 4);
+//     ASSERT_EQ(out[0], 0);
+//     ASSERT_EQ(out[1], 0);
+//     ASSERT_EQ(out[2], 0);
+//     ASSERT_EQ(out[3], 0);
+// }
 
-TEST(Multiply, highestMult) {
-    std::array<uint8_t, 2> a{ 255, 255 };
-    std::array<uint8_t, 2> b{ 255, 255 };
-    std::array<uint8_t, 4> out{ 0, 0, 0, 0 };
-    Util::multiplyAccumulate<uint8_t, uint16_t>(out, a, b, 4);
-    ASSERT_EQ(out[0], 1);
-    ASSERT_EQ(out[1], 0);
-    ASSERT_EQ(out[2], 0b11111110);
-    ASSERT_EQ(out[3], 0b11111111);
-}
+// TEST(Multiply, highestMult) {
+//     std::array<uint8_t, 2> a{ 255, 255 };
+//     std::array<uint8_t, 2> b{ 255, 255 };
+//     std::array<uint8_t, 4> out{ 0, 0, 0, 0 };
+//     Util::multiplyAccumulate<uint8_t, uint16_t>(out, a, b, 4);
+//     ASSERT_EQ(out[0], 1);
+//     ASSERT_EQ(out[1], 0);
+//     ASSERT_EQ(out[2], 0b11111110);
+//     ASSERT_EQ(out[3], 0b11111111);
+// }
 
 TEST(Add, accumulateOverflow) {
     std::array<uint8_t, 3> a{ 255, 255, 0 };

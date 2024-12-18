@@ -8,10 +8,6 @@ namespace Util {
     concept DigitType =
         std::unsigned_integral<T> || std::is_same_v<T, __uint128_t>;
 
-    template <typename Factor, typename Product>
-    concept ValidFactorProductPair = DigitType<Factor> && DigitType<Product> &&
-                                     sizeof(Factor) * 2 <= sizeof(Product);
-
     template <typename T, typename D = decltype(T()[0])>
     concept IndexableToDigit = requires(T t, D d) {
         requires DigitType<std::remove_reference_t<D>>;
@@ -34,6 +30,17 @@ namespace Util {
     }
 
     /**
+     * @brief Get the max amount of bits that the index-th fibonacci number fits
+     * inito
+     */
+    inline size_t getMaxBits(const size_t index) {
+        if (index == 0) {
+            return 1;
+        }
+        return index - 1;
+    }
+
+    /**
      * @brief From GCC: These built-in functions promote the first two operands
      * into infinite precision signed type and perform addition on those
      * promoted operands. The result is then cast to the type the third pointer
@@ -47,9 +54,7 @@ namespace Util {
      */
     template <typename T, typename R, typename S>
         requires std::is_convertible_v<T, S> && std::is_convertible_v<R, S>
-    inline bool __attribute__((always_inline)) addOverflow(
-        T a, R b, S *result
-    ) {
+    inline bool _INLINE addOverflow(T a, R b, S *result) {
         return __builtin_add_overflow(a, b, result);
     }
     /**
@@ -57,7 +62,7 @@ namespace Util {
      */
     template <typename T, typename R>
         requires std::is_convertible_v<R, T>
-    inline bool __attribute__((always_inline)) addOverflow(T &a, R b) {
+    inline bool _INLINE addOverflow(T &a, R b) {
         return __builtin_add_overflow(a, b, &a);
     }
 
@@ -103,54 +108,19 @@ namespace Util {
     }
 
     /**
-     * @brief Multiply a by scalar and add the result to out
-     *
-     * Requires out has size * 2 items, and a has size items
-     */
-    template <
-        typename Factor, typename Product, IndexableToDigit<Factor> I,
-        IndexableToDigit<Factor> J,
-        size_t FactorBits = sizeof(Factor) * CHAR_BIT>
-        requires ValidFactorProductPair<Factor, Product>
-    void scalarMultAccumulate(
-        I &out, const J &a, const Factor &scalar, const size_t &size,
-        const size_t &shiftFactor
-    ) {
-        // TODO: Something in this function is taking suspiciously long
-        for (size_t i = 0; i < size; i++) {
-            Product product =
-                a[i] * scalar;  // This conversion is bad (but worse when I
-                                // change it to Factor)
-            // Factor product = 1;
-            // const Factor carry = 1;
-            const Factor carry = addOverflow(out[i + shiftFactor], product);
-            const Factor shifted = (product >> FactorBits) + carry;
-            const Factor carry2 = addOverflow(
-                out[i + shiftFactor + 1], shifted
-            );  // This line takes forrever
-            if (i < size - 1) [[likely]] {
-                out[i + shiftFactor + 2] += carry2;
-            }
-        }
-    }
-
-    /**
      * @brief Multiply a by b and add the result in out
      *
      * Size refers to the size of a and b
      * Requires out has size * 2 elements
      */
     template <
-        typename Factor, typename Product, IndexableToDigit<Factor> I,
-        IndexableToDigit<Factor> J>
-        requires ValidFactorProductPair<Factor, Product>
+        typename Factor, IndexableToDigit<Factor> I, IndexableToDigit<Factor> J>
     void multiplyAccumulate(I &out, const J &a, const J &b, const size_t size) {
+        ASSERT(false, "Not implemented");
         ASSERT(&out != &a && &out != &b);
         ASSERT(out.size() >= size);
         const size_t halfSize = size / 2;
-        for (size_t i = 0; i < halfSize; i++) {
-            scalarMultAccumulate<Factor, Product>(out, a, b[i], halfSize, i);
-        }
+        // TODO: Algorithm for this
     }
 
     /**

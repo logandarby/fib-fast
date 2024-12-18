@@ -8,3 +8,5 @@
 #endif
 
 #define _STRINGIFY_MACRO(x) #x
+
+#define _INLINE __attribute__((always_inline))
