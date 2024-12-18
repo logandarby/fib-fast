@@ -8,6 +8,8 @@ project(FibFast)
 # Libraries
 
 add_subdirectory(extern/spdlog)
+set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}")
+find_package(GMP REQUIRED)
 
 # Sources
 # MY_SOURCES is defined to be a list of all the source files in src that aren't main.cpp
@@ -29,7 +31,8 @@ add_subdirectory(tests)
 
 # Final Link
 add_library("${CMAKE_PROJECT_NAME}_Lib" STATIC ${MY_SOURCES})
-target_link_libraries("${CMAKE_PROJECT_NAME}_Lib" PUBLIC spdlog)
+# External Libraries
+target_link_libraries("${CMAKE_PROJECT_NAME}_Lib" PUBLIC spdlog gmp libgmp)
 target_sources("${CMAKE_PROJECT_NAME}" PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/src/main.cpp")
 target_link_libraries("${CMAKE_PROJECT_NAME}" PUBLIC "${CMAKE_PROJECT_NAME}_Lib")
 target_include_directories("${CMAKE_PROJECT_NAME}_Lib" PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/src")

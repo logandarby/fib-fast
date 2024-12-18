@@ -13,6 +13,7 @@
 #include <iostream>
 #include <memory>
 #include <span>
+#include <stack>
 #include <stdexcept>
 #include <string>
 #include <unordered_map>

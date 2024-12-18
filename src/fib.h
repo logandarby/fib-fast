@@ -4,17 +4,17 @@
 #include "util.h"
 
 #ifdef _DEBUG
-typedef uint8_t digit_t;
+using digit_t = uint8_t;
 #else
-typedef uint8_t digit_t;
+using digit_t = uint8_t;
 #endif
 
-typedef uint8_t factor_t;
-typedef uint16_t product_t;  // must be at least 2 * factor_t
+using factor_t = digit_t;
+using product_t = uint16_t;  // must be at least 2 * factor_t
 
 static_assert(
     2 * sizeof(factor_t) <= sizeof(product_t),
-    "2 * factor_t must be smaller than product_t"
+    "product_t must be able to fit 2 * factor_t bytes"
 );
 
 using FibonacciFunction = std::function<std::vector<digit_t>(size_t)>;

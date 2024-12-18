@@ -1,8 +1,9 @@
 # Very fast implementation of the Fibonacci sequence algorithm using the fast doubling method. Used for benchmarking
 
 import time
+import sys
 
-DEFAULT_INDEX = 20
+DEFAULT_INDEX = 24
 
 def fastFib(n: int) -> int:
     def fib_pair(k: int) -> tuple[int, int]:
@@ -18,6 +19,10 @@ def fastFib(n: int) -> int:
 
 if __name__ == '__main__':
     start = time.time();
-    print(fastFib(DEFAULT_INDEX))
+    arg = int(sys.argv[1])
+    print(arg)
+    inputVal = arg if arg else DEFAULT_INDEX
+    big = fastFib(inputVal)
     end = time.time()
     print(f"Elapsed Time: {end - start:.4f} seconds")
+    # print(big)

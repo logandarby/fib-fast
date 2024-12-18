@@ -15,7 +15,6 @@ namespace Util {
     template <typename T, typename D = decltype(T()[0])>
     concept IndexableToDigit = requires(T t, D d) {
         requires DigitType<std::remove_reference_t<D>>;
-        { t.at(0) } -> std::convertible_to<D>;
         { t[0] } -> std::convertible_to<D>;
         { t.size() } -> std::same_as<size_t>;
     };
@@ -48,7 +47,9 @@ namespace Util {
      */
     template <typename T, typename R, typename S>
         requires std::is_convertible_v<T, S> && std::is_convertible_v<R, S>
-    [[nodiscard]] inline bool addOverflow(T a, R b, S *result) {
+    inline bool __attribute__((always_inline)) addOverflow(
+        T a, R b, S *result
+    ) {
         return __builtin_add_overflow(a, b, result);
     }
     /**
@@ -56,7 +57,7 @@ namespace Util {
      */
     template <typename T, typename R>
         requires std::is_convertible_v<R, T>
-    [[nodiscard]] inline bool addOverflow(T &a, R b) {
+    inline bool __attribute__((always_inline)) addOverflow(T &a, R b) {
         return __builtin_add_overflow(a, b, &a);
     }
 
@@ -69,16 +70,14 @@ namespace Util {
     unsigned char accumulate(T &a, const T &b, const size_t size) {
         unsigned char carry = 0;
         for (size_t i = 0; i < size; i++) {
-            carry = addOverflow(a.at(i), carry, &a.at(i));
-            carry += static_cast<unsigned char>(
-                addOverflow(a.at(i), b.at(i), &a.at(i))
-            );
+            carry = addOverflow(a[i], carry, &a[i]);
+            carry += static_cast<unsigned char>(addOverflow(a[i], b[i], &a[i]));
         }
         ASSERT(
             a.size() > size,
             "Argument \"a\" must have enough space for a carry bit"
         );
-        return a.at(size) = carry;
+        return a[size] = carry;
     }
 
     /**
@@ -90,14 +89,14 @@ namespace Util {
     bool subtractAccumulate(T &a, const T &b, const size_t size) {
         unsigned char underflow = 0;
         for (size_t i = 0; i < size; i++) {
-            underflow = addOverflow(a.at(i), underflow, &a.at(i));
-            D twosComplement = ~b.at(i);
-            if (i == 0) {
+            underflow = addOverflow(a[i], underflow, &a[i]);
+            D twosComplement = ~b[i];
+            if (i == 0) [[unlikely]] {
                 underflow +=
                     static_cast<unsigned char>(addOverflow(twosComplement, 1));
             }
             underflow += static_cast<unsigned char>(
-                addOverflow(a.at(i), twosComplement, &a.at(i))
+                addOverflow(a[i], twosComplement, &a[i])
             );
         }
         return !underflow;
@@ -110,22 +109,27 @@ namespace Util {
      */
     template <
         typename Factor, typename Product, IndexableToDigit<Factor> I,
-        IndexableToDigit<Factor> J>
+        IndexableToDigit<Factor> J,
+        size_t FactorBits = sizeof(Factor) * CHAR_BIT>
         requires ValidFactorProductPair<Factor, Product>
     void scalarMultAccumulate(
-        I &out, const J &a, const Factor &scalar, const size_t size,
-        const size_t shiftFactor
+        I &out, const J &a, const Factor &scalar, const size_t &size,
+        const size_t &shiftFactor
     ) {
+        // TODO: Something in this function is taking suspiciously long
         for (size_t i = 0; i < size; i++) {
-            Product product = a.at(i) * scalar;
-            const bool carry = addOverflow(
-                out.at(i + shiftFactor), static_cast<Factor>(product)
-            );
-            const Factor shifted = product >> (sizeof(Factor) * CHAR_BIT);
-            const bool carry2 =
-                addOverflow(out.at(i + shiftFactor + 1), shifted + carry);
-            if (i < size - 1) {
-                out.at(i + shiftFactor + 2) += carry2;
+            Product product =
+                a[i] * scalar;  // This conversion is bad (but worse when I
+                                // change it to Factor)
+            // Factor product = 1;
+            // const Factor carry = 1;
+            const Factor carry = addOverflow(out[i + shiftFactor], product);
+            const Factor shifted = (product >> FactorBits) + carry;
+            const Factor carry2 = addOverflow(
+                out[i + shiftFactor + 1], shifted
+            );  // This line takes forrever
+            if (i < size - 1) [[likely]] {
+                out[i + shiftFactor + 2] += carry2;
             }
         }
     }
@@ -142,9 +146,10 @@ namespace Util {
         requires ValidFactorProductPair<Factor, Product>
     void multiplyAccumulate(I &out, const J &a, const J &b, const size_t size) {
         ASSERT(&out != &a && &out != &b);
+        ASSERT(out.size() >= size);
         const size_t halfSize = size / 2;
         for (size_t i = 0; i < halfSize; i++) {
-            scalarMultAccumulate<Factor, Product>(out, a, b.at(i), halfSize, i);
+            scalarMultAccumulate<Factor, Product>(out, a, b[i], halfSize, i);
         }
     }
 
@@ -156,30 +161,27 @@ namespace Util {
     template <IndexableToDigit T>
     auto bitShiftLeft(T &out, const size_t size, const size_t shift) {
         ASSERT(!(shift == 0 || size == 0))
-        const size_t bitSize = sizeof(out.at(0)) * CHAR_BIT;
+        ASSERT(out.size() >= size);
+        const size_t bitSize = sizeof(out[0]) * CHAR_BIT;
         const size_t shiftRemainder = bitSize - shift;
-        const auto carry = out.at(size - 1) >> shiftRemainder;
+        const auto carry = out[size - 1] >> shiftRemainder;
         for (size_t i = size - 1; i >= 1; i--) {
-            const auto test = 2;
-            const auto currentShift = (out.at(i) << shift);
-            const auto remainderShift = (out.at(i - 1) >> shiftRemainder);
-            out.at(i) = currentShift | remainderShift;
+            out[i] = (out[i] << shift) | (out[i - 1] >> shiftRemainder);
         }
-        out.at(0) <<= shift;
+        out[0] <<= shift;
         return carry;
     }
 
-    template <IndexableToDigit T>
+    template <typename T>
+        requires IndexableToDigit<T>
     void bitShiftRight(T &out, const size_t size, const size_t shift) {
         ASSERT(!(shift == 0 || size == 0))
-        const size_t bitSize = sizeof(out.at(0)) * CHAR_BIT;
+        ASSERT(out.size() >= size);
+        const size_t bitSize = sizeof(out[0]) * CHAR_BIT;
         const size_t shiftRemainder = bitSize - shift;
         for (size_t i = 0; i < size - 1; i++) {
-            const auto currentShift = (out.at(i) >> shift);
-            const auto remainderShift = (out.at(i + 1) << shiftRemainder);
-            out.at(i) = currentShift | remainderShift;
+            out[i] = (out[i] >> shift) | (out[i + 1] << shiftRemainder);
         }
-        out.at(size - 1) >>= shift;
-    }
-
+        out[size - 1] >>= shift;
+    };
 }

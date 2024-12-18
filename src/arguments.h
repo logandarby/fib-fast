@@ -28,7 +28,7 @@ public:
 };
 
 static const Arguments DEFAULT_ARGUMENTS{
-    .index = 20,
+    .index = 100'000,
     .algorithm = AlgorithmType::FAST_DOUBLE,
 };
 
