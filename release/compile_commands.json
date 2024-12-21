@@ -1,0 +1,97 @@
+[
+{
+  "directory": "C:/Users/Logan/Documents/Code/math/quick-fib/release",
+  "command": "C:\\msys64\\mingw64\\bin\\g++.exe -DSPDLOG_COMPILED_LIB -IC:/Users/Logan/Documents/Code/math/quick-fib/extern/spdlog/include -O3 -DNDEBUG -std=c++23 -o CMakeFiles\\FibFast.dir\\src\\main.cpp.obj -c C:\\Users\\Logan\\Documents\\Code\\math\\quick-fib\\src\\main.cpp",
+  "file": "C:\\Users\\Logan\\Documents\\Code\\math\\quick-fib\\src\\main.cpp"
+},
+{
+  "directory": "C:/Users/Logan/Documents/Code/math/quick-fib/release",
+  "command": "C:\\msys64\\mingw64\\bin\\g++.exe -DSPDLOG_COMPILED_LIB -IC:/Users/Logan/Documents/Code/math/quick-fib/src -IC:/Users/Logan/Documents/Code/math/quick-fib/extern/spdlog/include -O3 -DNDEBUG -std=c++23 -o CMakeFiles\\FibFast_Lib.dir\\src\\algorithm\\fibDouble.cpp.obj -c C:\\Users\\Logan\\Documents\\Code\\math\\quick-fib\\src\\algorithm\\fibDouble.cpp",
+  "file": "C:\\Users\\Logan\\Documents\\Code\\math\\quick-fib\\src\\algorithm\\fibDouble.cpp"
+},
+{
+  "directory": "C:/Users/Logan/Documents/Code/math/quick-fib/release",
+  "command": "C:\\msys64\\mingw64\\bin\\g++.exe -DSPDLOG_COMPILED_LIB -IC:/Users/Logan/Documents/Code/math/quick-fib/src -IC:/Users/Logan/Documents/Code/math/quick-fib/extern/spdlog/include -O3 -DNDEBUG -std=c++23 -o CMakeFiles\\FibFast_Lib.dir\\src\\algorithm\\fibLinear.cpp.obj -c C:\\Users\\Logan\\Documents\\Code\\math\\quick-fib\\src\\algorithm\\fibLinear.cpp",
+  "file": "C:\\Users\\Logan\\Documents\\Code\\math\\quick-fib\\src\\algorithm\\fibLinear.cpp"
+},
+{
+  "directory": "C:/Users/Logan/Documents/Code/math/quick-fib/release",
+  "command": "C:\\msys64\\mingw64\\bin\\g++.exe -DSPDLOG_COMPILED_LIB -IC:/Users/Logan/Documents/Code/math/quick-fib/src -IC:/Users/Logan/Documents/Code/math/quick-fib/extern/spdlog/include -O3 -DNDEBUG -std=c++23 -o CMakeFiles\\FibFast_Lib.dir\\src\\algorithm\\fibMatrix.cpp.obj -c C:\\Users\\Logan\\Documents\\Code\\math\\quick-fib\\src\\algorithm\\fibMatrix.cpp",
+  "file": "C:\\Users\\Logan\\Documents\\Code\\math\\quick-fib\\src\\algorithm\\fibMatrix.cpp"
+},
+{
+  "directory": "C:/Users/Logan/Documents/Code/math/quick-fib/release",
+  "command": "C:\\msys64\\mingw64\\bin\\g++.exe -DSPDLOG_COMPILED_LIB -IC:/Users/Logan/Documents/Code/math/quick-fib/src -IC:/Users/Logan/Documents/Code/math/quick-fib/extern/spdlog/include -O3 -DNDEBUG -std=c++23 -o CMakeFiles\\FibFast_Lib.dir\\src\\arguments.cpp.obj -c C:\\Users\\Logan\\Documents\\Code\\math\\quick-fib\\src\\arguments.cpp",
+  "file": "C:\\Users\\Logan\\Documents\\Code\\math\\quick-fib\\src\\arguments.cpp"
+},
+{
+  "directory": "C:/Users/Logan/Documents/Code/math/quick-fib/release",
+  "command": "C:\\msys64\\mingw64\\bin\\g++.exe -DSPDLOG_COMPILED_LIB -IC:/Users/Logan/Documents/Code/math/quick-fib/src -IC:/Users/Logan/Documents/Code/math/quick-fib/extern/spdlog/include -O3 -DNDEBUG -std=c++23 -o CMakeFiles\\FibFast_Lib.dir\\src\\logger.cpp.obj -c C:\\Users\\Logan\\Documents\\Code\\math\\quick-fib\\src\\logger.cpp",
+  "file": "C:\\Users\\Logan\\Documents\\Code\\math\\quick-fib\\src\\logger.cpp"
+},
+{
+  "directory": "C:/Users/Logan/Documents/Code/math/quick-fib/release",
+  "command": "C:\\msys64\\mingw64\\bin\\g++.exe -DSPDLOG_COMPILED_LIB -IC:/Users/Logan/Documents/Code/math/quick-fib/src -IC:/Users/Logan/Documents/Code/math/quick-fib/extern/spdlog/include -O3 -DNDEBUG -std=c++23 -o CMakeFiles\\FibFast_Lib.dir\\src\\sciNumber.cpp.obj -c C:\\Users\\Logan\\Documents\\Code\\math\\quick-fib\\src\\sciNumber.cpp",
+  "file": "C:\\Users\\Logan\\Documents\\Code\\math\\quick-fib\\src\\sciNumber.cpp"
+},
+{
+  "directory": "C:/Users/Logan/Documents/Code/math/quick-fib/release",
+  "command": "C:\\msys64\\mingw64\\bin\\g++.exe -DSPDLOG_COMPILED_LIB -IC:/Users/Logan/Documents/Code/math/quick-fib/extern/spdlog/include -O3 -DNDEBUG -std=c++23 -o extern\\spdlog\\CMakeFiles\\spdlog.dir\\src\\spdlog.cpp.obj -c C:\\Users\\Logan\\Documents\\Code\\math\\quick-fib\\extern\\spdlog\\src\\spdlog.cpp",
+  "file": "C:\\Users\\Logan\\Documents\\Code\\math\\quick-fib\\extern\\spdlog\\src\\spdlog.cpp"
+},
+{
+  "directory": "C:/Users/Logan/Documents/Code/math/quick-fib/release",
+  "command": "C:\\msys64\\mingw64\\bin\\g++.exe -DSPDLOG_COMPILED_LIB -IC:/Users/Logan/Documents/Code/math/quick-fib/extern/spdlog/include -O3 -DNDEBUG -std=c++23 -o extern\\spdlog\\CMakeFiles\\spdlog.dir\\src\\stdout_sinks.cpp.obj -c C:\\Users\\Logan\\Documents\\Code\\math\\quick-fib\\extern\\spdlog\\src\\stdout_sinks.cpp",
+  "file": "C:\\Users\\Logan\\Documents\\Code\\math\\quick-fib\\extern\\spdlog\\src\\stdout_sinks.cpp"
+},
+{
+  "directory": "C:/Users/Logan/Documents/Code/math/quick-fib/release",
+  "command": "C:\\msys64\\mingw64\\bin\\g++.exe -DSPDLOG_COMPILED_LIB -IC:/Users/Logan/Documents/Code/math/quick-fib/extern/spdlog/include -O3 -DNDEBUG -std=c++23 -o extern\\spdlog\\CMakeFiles\\spdlog.dir\\src\\color_sinks.cpp.obj -c C:\\Users\\Logan\\Documents\\Code\\math\\quick-fib\\extern\\spdlog\\src\\color_sinks.cpp",
+  "file": "C:\\Users\\Logan\\Documents\\Code\\math\\quick-fib\\extern\\spdlog\\src\\color_sinks.cpp"
+},
+{
+  "directory": "C:/Users/Logan/Documents/Code/math/quick-fib/release",
+  "command": "C:\\msys64\\mingw64\\bin\\g++.exe -DSPDLOG_COMPILED_LIB -IC:/Users/Logan/Documents/Code/math/quick-fib/extern/spdlog/include -O3 -DNDEBUG -std=c++23 -o extern\\spdlog\\CMakeFiles\\spdlog.dir\\src\\file_sinks.cpp.obj -c C:\\Users\\Logan\\Documents\\Code\\math\\quick-fib\\extern\\spdlog\\src\\file_sinks.cpp",
+  "file": "C:\\Users\\Logan\\Documents\\Code\\math\\quick-fib\\extern\\spdlog\\src\\file_sinks.cpp"
+},
+{
+  "directory": "C:/Users/Logan/Documents/Code/math/quick-fib/release",
+  "command": "C:\\msys64\\mingw64\\bin\\g++.exe -DSPDLOG_COMPILED_LIB -IC:/Users/Logan/Documents/Code/math/quick-fib/extern/spdlog/include -O3 -DNDEBUG -std=c++23 -o extern\\spdlog\\CMakeFiles\\spdlog.dir\\src\\async.cpp.obj -c C:\\Users\\Logan\\Documents\\Code\\math\\quick-fib\\extern\\spdlog\\src\\async.cpp",
+  "file": "C:\\Users\\Logan\\Documents\\Code\\math\\quick-fib\\extern\\spdlog\\src\\async.cpp"
+},
+{
+  "directory": "C:/Users/Logan/Documents/Code/math/quick-fib/release",
+  "command": "C:\\msys64\\mingw64\\bin\\g++.exe -DSPDLOG_COMPILED_LIB -IC:/Users/Logan/Documents/Code/math/quick-fib/extern/spdlog/include -O3 -DNDEBUG -std=c++23 -o extern\\spdlog\\CMakeFiles\\spdlog.dir\\src\\cfg.cpp.obj -c C:\\Users\\Logan\\Documents\\Code\\math\\quick-fib\\extern\\spdlog\\src\\cfg.cpp",
+  "file": "C:\\Users\\Logan\\Documents\\Code\\math\\quick-fib\\extern\\spdlog\\src\\cfg.cpp"
+},
+{
+  "directory": "C:/Users/Logan/Documents/Code/math/quick-fib/release",
+  "command": "C:\\msys64\\mingw64\\bin\\g++.exe -DSPDLOG_COMPILED_LIB -IC:/Users/Logan/Documents/Code/math/quick-fib/extern/spdlog/include -O3 -DNDEBUG -std=c++23 -o extern\\spdlog\\CMakeFiles\\spdlog.dir\\src\\bundled_fmtlib_format.cpp.obj -c C:\\Users\\Logan\\Documents\\Code\\math\\quick-fib\\extern\\spdlog\\src\\bundled_fmtlib_format.cpp",
+  "file": "C:\\Users\\Logan\\Documents\\Code\\math\\quick-fib\\extern\\spdlog\\src\\bundled_fmtlib_format.cpp"
+},
+{
+  "directory": "C:/Users/Logan/Documents/Code/math/quick-fib/release",
+  "command": "C:\\msys64\\mingw64\\bin\\g++.exe -DSPDLOG_COMPILED_LIB -IC:/Users/Logan/Documents/Code/math/quick-fib/tests/../src -IC:/Users/Logan/Documents/Code/math/quick-fib/extern/spdlog/include -isystem C:/Users/Logan/Documents/Code/math/quick-fib/release/_deps/googletest-src/googletest/include -isystem C:/Users/Logan/Documents/Code/math/quick-fib/release/_deps/googletest-src/googletest -O3 -DNDEBUG -std=c++23 -o tests\\CMakeFiles\\utilTest.dir\\utilTest.cpp.obj -c C:\\Users\\Logan\\Documents\\Code\\math\\quick-fib\\tests\\utilTest.cpp",
+  "file": "C:\\Users\\Logan\\Documents\\Code\\math\\quick-fib\\tests\\utilTest.cpp"
+},
+{
+  "directory": "C:/Users/Logan/Documents/Code/math/quick-fib/release",
+  "command": "C:\\msys64\\mingw64\\bin\\g++.exe -IC:/Users/Logan/Documents/Code/math/quick-fib/release/_deps/googletest-src/googlemock/include -IC:/Users/Logan/Documents/Code/math/quick-fib/release/_deps/googletest-src/googlemock -isystem C:/Users/Logan/Documents/Code/math/quick-fib/release/_deps/googletest-src/googletest/include -isystem C:/Users/Logan/Documents/Code/math/quick-fib/release/_deps/googletest-src/googletest -O3 -DNDEBUG -Wall -Wshadow -Werror -Wno-error=dangling-else -DGTEST_HAS_PTHREAD=0 -fexceptions -Wextra -Wno-unused-parameter -Wno-missing-field-initializers -std=c++23 -o _deps\\googletest-build\\googlemock\\CMakeFiles\\gmock.dir\\src\\gmock-all.cc.obj -c C:\\Users\\Logan\\Documents\\Code\\math\\quick-fib\\release\\_deps\\googletest-src\\googlemock\\src\\gmock-all.cc",
+  "file": "C:\\Users\\Logan\\Documents\\Code\\math\\quick-fib\\release\\_deps\\googletest-src\\googlemock\\src\\gmock-all.cc"
+},
+{
+  "directory": "C:/Users/Logan/Documents/Code/math/quick-fib/release",
+  "command": "C:\\msys64\\mingw64\\bin\\g++.exe -isystem C:/Users/Logan/Documents/Code/math/quick-fib/release/_deps/googletest-src/googlemock/include -isystem C:/Users/Logan/Documents/Code/math/quick-fib/release/_deps/googletest-src/googlemock -isystem C:/Users/Logan/Documents/Code/math/quick-fib/release/_deps/googletest-src/googletest/include -isystem C:/Users/Logan/Documents/Code/math/quick-fib/release/_deps/googletest-src/googletest -O3 -DNDEBUG -Wall -Wshadow -Werror -Wno-error=dangling-else -DGTEST_HAS_PTHREAD=0 -fexceptions -Wextra -Wno-unused-parameter -Wno-missing-field-initializers -std=c++23 -o _deps\\googletest-build\\googlemock\\CMakeFiles\\gmock_main.dir\\src\\gmock_main.cc.obj -c C:\\Users\\Logan\\Documents\\Code\\math\\quick-fib\\release\\_deps\\googletest-src\\googlemock\\src\\gmock_main.cc",
+  "file": "C:\\Users\\Logan\\Documents\\Code\\math\\quick-fib\\release\\_deps\\googletest-src\\googlemock\\src\\gmock_main.cc"
+},
+{
+  "directory": "C:/Users/Logan/Documents/Code/math/quick-fib/release",
+  "command": "C:\\msys64\\mingw64\\bin\\g++.exe -IC:/Users/Logan/Documents/Code/math/quick-fib/release/_deps/googletest-src/googletest/include -IC:/Users/Logan/Documents/Code/math/quick-fib/release/_deps/googletest-src/googletest -O3 -DNDEBUG -Wall -Wshadow -Werror -Wno-error=dangling-else -DGTEST_HAS_PTHREAD=0 -fexceptions -Wextra -Wno-unused-parameter -Wno-missing-field-initializers -std=c++23 -o _deps\\googletest-build\\googletest\\CMakeFiles\\gtest.dir\\src\\gtest-all.cc.obj -c C:\\Users\\Logan\\Documents\\Code\\math\\quick-fib\\release\\_deps\\googletest-src\\googletest\\src\\gtest-all.cc",
+  "file": "C:\\Users\\Logan\\Documents\\Code\\math\\quick-fib\\release\\_deps\\googletest-src\\googletest\\src\\gtest-all.cc"
+},
+{
+  "directory": "C:/Users/Logan/Documents/Code/math/quick-fib/release",
+  "command": "C:\\msys64\\mingw64\\bin\\g++.exe -isystem C:/Users/Logan/Documents/Code/math/quick-fib/release/_deps/googletest-src/googletest/include -isystem C:/Users/Logan/Documents/Code/math/quick-fib/release/_deps/googletest-src/googletest -O3 -DNDEBUG -Wall -Wshadow -Werror -Wno-error=dangling-else -DGTEST_HAS_PTHREAD=0 -fexceptions -Wextra -Wno-unused-parameter -Wno-missing-field-initializers -std=c++23 -o _deps\\googletest-build\\googletest\\CMakeFiles\\gtest_main.dir\\src\\gtest_main.cc.obj -c C:\\Users\\Logan\\Documents\\Code\\math\\quick-fib\\release\\_deps\\googletest-src\\googletest\\src\\gtest_main.cc",
+  "file": "C:\\Users\\Logan\\Documents\\Code\\math\\quick-fib\\release\\_deps\\googletest-src\\googletest\\src\\gtest_main.cc"
+}
+]

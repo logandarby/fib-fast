@@ -1,0 +1,29 @@
+Determining if the _fwrite_nolock exist failed with the following output:
+Change Dir: C:/Users/Logan/Documents/Code/math/quick-fib/release/CMakeFiles/CMakeScratch/TryCompile-cq5hmu
+
+Run Build Command(s):C:/ProgramData/chocolatey/bin/ninja.exe cmTC_fb641 && [1/2] Building C object CMakeFiles/cmTC_fb641.dir/CheckSymbolExists.c.obj
+FAILED: CMakeFiles/cmTC_fb641.dir/CheckSymbolExists.c.obj 
+C:\msys64\mingw64\bin\cc.exe    -o CMakeFiles/cmTC_fb641.dir/CheckSymbolExists.c.obj -c C:/Users/Logan/Documents/Code/math/quick-fib/release/CMakeFiles/CMakeScratch/TryCompile-cq5hmu/CheckSymbolExists.c
+C:/Users/Logan/Documents/Code/math/quick-fib/release/CMakeFiles/CMakeScratch/TryCompile-cq5hmu/CheckSymbolExists.c: In function 'main':
+C:/Users/Logan/Documents/Code/math/quick-fib/release/CMakeFiles/CMakeScratch/TryCompile-cq5hmu/CheckSymbolExists.c:8:19: error: '_fwrite_nolock' undeclared (first use in this function); did you mean '_fgetc_nolock'?
+    8 |   return ((int*)(&_fwrite_nolock))[argc];
+      |                   ^~~~~~~~~~~~~~
+      |                   _fgetc_nolock
+C:/Users/Logan/Documents/Code/math/quick-fib/release/CMakeFiles/CMakeScratch/TryCompile-cq5hmu/CheckSymbolExists.c:8:19: note: each undeclared identifier is reported only once for each function it appears in
+ninja: build stopped: subcommand failed.
+
+
+File CheckSymbolExists.c:
+/* */
+#include <stdio.h>
+
+int main(int argc, char** argv)
+{
+  (void)argv;
+#ifndef _fwrite_nolock
+  return ((int*)(&_fwrite_nolock))[argc];
+#else
+  (void)argc;
+  return 0;
+#endif
+}

@@ -1,6 +1,5 @@
 # Build and Release Files
 build/
-release/
 
 # IDE Files
 .vscode/

@@ -58,7 +58,7 @@ std::vector<digit_t> fibonacciDouble(size_t index) {
     calculateFibPair(index, pair, maxDigit);
 
     std::vector<mp_limb_t> result(maxDigit);
-    std::copy(a->_mp_d, &a->_mp_d[a->_mp_alloc - 1], result.begin());
+    std::copy(a->_mp_d, &a->_mp_d[std::abs(a->_mp_size) - 1], result.begin());
 
     mpz_clears(a, b, c, d, nullptr);
     return result;
